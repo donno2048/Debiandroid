@@ -24,5 +24,5 @@ chmod +x setup.sh
 Open Termux and run:
 
 ```sh
-env -i proot --link2symlink -S . -w /root /bin/bash
+env -u TMPDIR -u LD_PRELOAD -u PATH proot --link2symlink -S . -w /root /bin/bash
 ```
