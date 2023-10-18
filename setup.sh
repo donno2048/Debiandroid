@@ -21,7 +21,7 @@ case $(uname -m) in
         i686) ARCH=i386;;
         x86_64) ARCH=amd64;;
 esac
-for pkg in $(<packages.txt); do
+for pkg in $(cat packages.txt | sed "s/ARCH/$ARCH/g"); do
     wget -nv -nd https://ftp.debian.org/debian/$pkg
 done
 wget -nv -qO- http://deb.debian.org/debian/dists/bullseye/main/binary-$ARCH/Packages.gz | gunzip - -c > $PWD/var/lib/apt/lists/deb.debian.org_dists_bullseye_main_binary-${ARCH}_Packages
