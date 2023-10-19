@@ -2,19 +2,9 @@
 set -e
 export PATH LANG=C
 unset LD_PRELOAD TMPDIR
-mkdir -p $PWD/etc/apt
-mkdir -p $PWD/var/lib/dpkg/info
 mkdir -p $PWD/var/lib/apt/lists/partial
 mkdir -p $PWD/var/cache/apt/archives/partial
-mkdir -p $PWD/usr/sbin
-mkdir -p $PWD/usr/bin
-mkdir -p $PWD/sbin
-touch $PWD/var/lib/dpkg/available
-touch $PWD/etc/fstab
-touch $PWD/var/lib/dpkg/info/dpkg.list
-ln -sf /usr/share/zoneinfo/UTC $PWD/etc/localtime
 echo "deb http://deb.debian.org/debian bullseye main" > $PWD/etc/apt/sources.list
-export CFLAGS="-static"
 case $(uname -m) in
         arm) ARCH=armel;;
         aarch64) ARCH=arm64;;
