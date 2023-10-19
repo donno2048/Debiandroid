@@ -1,7 +1,5 @@
 #!/bin/bash
 set -e
-export PATH LANG=C
-unset LD_PRELOAD TMPDIR
 mkdir -p $PWD/var/lib/apt/lists/partial
 mkdir -p $PWD/var/cache/apt/archives/partial
 case $(uname -m) in
