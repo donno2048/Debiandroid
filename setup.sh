@@ -4,7 +4,6 @@ export PATH LANG=C
 unset LD_PRELOAD TMPDIR
 mkdir -p $PWD/var/lib/apt/lists/partial
 mkdir -p $PWD/var/cache/apt/archives/partial
-echo "deb http://deb.debian.org/debian bullseye main" > $PWD/etc/apt/sources.list
 case $(uname -m) in
         arm) ARCH=armel;;
         aarch64) ARCH=arm64;;
@@ -59,10 +58,11 @@ termux-chroot dpkg --configure --pending --force-configure-any --force-depends -
 echo "root:x:0:
 mail:x:8:
 shadow:x:42:
-utmp:x:43:" > etc/group
+utmp:x:43:" > $PWD/etc/group
 echo "root:x:0:0:root:/:/bin/sh
 mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
-_apt:x:100:65534::/nonexistent:/usr/sbin/nologin" > etc/passwd
+_apt:x:100:65534::/nonexistent:/usr/sbin/nologin" > $PWD/etc/passwd
+echo "deb http://deb.debian.org/debian bullseye main" > $PWD/etc/apt/sources.list
 termux-chroot dpkg --force-all --install dpkg.deb
 rm dpkg.deb
 mv $PWD/sbin/start-stop-daemon.REAL $PWD/sbin/start-stop-daemon
