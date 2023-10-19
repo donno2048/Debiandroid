@@ -74,22 +74,7 @@ utmp:x:43:" > etc/group
 echo "root:x:0:0:root:/:/bin/sh
 mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
 _apt:x:100:65534::/nonexistent:/usr/sbin/nologin" > etc/passwd
-touch $PWD/usr/bin/awk
-chmod +x $PWD/usr/bin/awk
-while [ ! -z "$(<not_installed)" ]; do
-    echo > to_install
-    for pkg in $(<not_installed); do
-        if [ -z "$(dpkg-deb -I $PWD/var/cache/apt/archives/${pkg}_*.deb | grep -E "Depends|Pre-Depends" | tr " " "\n" | grep -oP ".*[^,]" | fgrep -Fxf not_installed)" ]; then
-                echo $pkg >> to_install
-        fi
-    done
-    cat not_installed | grep -vE "^($(printf "$(awk NF to_install | sort | uniq | sed 's/[.[\(*^$+?{|]/\\&/g')" | tr '\n' '|'))$" > not_installed
-    for pkg in $(<to_install); do
-        env -u LD_PRELOAD proot -S . --link2symlink /usr/bin/dpkg --force-overwrite --force-confold --force-depends --force-architecture --skip-same-version --install $PWD/var/cache/apt/archives/${pkg}_*.deb
-    done
-done
 termux-chroot dpkg --force-all --install dpkg.deb
-rm $PWD/usr/bin/awk
 rm not_installed
 rm to_install
 rm dpkg.deb
