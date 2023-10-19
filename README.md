@@ -13,7 +13,6 @@ Open the app and in the terminal run:
 ```sh
 apt update
 yes | apt install proot openssl wget binutils --fix-missing
-wget https://raw.githubusercontent.com/donno2048/Debiandroid/master/packages.txt
 wget https://raw.githubusercontent.com/donno2048/Debiandroid/master/setup.sh
 chmod +x setup.sh
 ./setup.sh
