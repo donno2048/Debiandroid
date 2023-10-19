@@ -66,7 +66,6 @@ echo "apt apt" > $PWD/var/lib/dpkg/cmethopt
 chmod +x $PWD/var/lib/dpkg/cmethopt
 export PATH=$PATH:/usr/bin:/bin:/usr/sbin:/sbin
 termux-chroot dpkg --configure --pending --force-configure-any --force-depends --force-architecture
-ls var/cache/apt/archives/ -1 | grep -oP "^[^/_]*(?=_)" | grep -vE "^($(echo $base | tr ' ' '|'))$" > not_installed
 echo "root:x:0:
 mail:x:8:
 shadow:x:42:
@@ -75,8 +74,6 @@ echo "root:x:0:0:root:/:/bin/sh
 mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
 _apt:x:100:65534::/nonexistent:/usr/sbin/nologin" > etc/passwd
 termux-chroot dpkg --force-all --install dpkg.deb
-rm not_installed
-rm to_install
 rm dpkg.deb
 mv $PWD/sbin/start-stop-daemon.REAL $PWD/sbin/start-stop-daemon
 rm -f $PWD/usr/sbin/policy-rc.d
