@@ -1,7 +1,5 @@
 #!/bin/bash
 set -e
-mkdir -p $PWD/var/lib/apt/lists/partial
-mkdir -p $PWD/var/cache/apt/archives/partial
 case $(uname -m) in
         arm) ARCH=armel;;
         aarch64) ARCH=arm64;;
@@ -9,15 +7,12 @@ case $(uname -m) in
         x86_64) ARCH=amd64;;
 esac
 for pkg in $(wget -qO- https://raw.githubusercontent.com/donno2048/Debiandroid/master/packages.txt | sed "s/ARCH/$ARCH/g"); do
-    wget -nv -nd https://ftp.debian.org/debian/$pkg
+    wget -nv -nd https://ftp.debian.org/debian/$pkg -P $PWD/var/cache/apt/archives
 done
-for pkg in *.deb; do
+for pkg in $PWD/var/cache/apt/archives/*.deb; do
     dpkg-deb --fsys-tarfile $pkg | proot --link2symlink tar -xf -
 done
-mv *.deb $PWD/var/cache/apt/archives
-base="base-passwd base-files libc6 perl-base libselinux1 libpcre2-8-0 dpkg"
-for pkg in $base; do
-    rm -rf tempo
+for pkg in base-passwd base-files libc6 perl-base libselinux1 libpcre2-8-0 dpkg; do
     proot --link2symlink dpkg-deb -R $PWD/var/cache/apt/archives/${pkg}_*.deb tempo
     rm -f tempo/DEBIAN/post*
     sed -i -e 's/dpkg-maintscript-helper/#/g' tempo/DEBIAN/pre* || true
@@ -26,8 +21,8 @@ for pkg in $base; do
         termux-chroot dpkg --force-all --install $pkg.deb
         rm $pkg.deb
     fi
+    rm -rf tempo
 done
-rm -rf tempo
 for pkg in $PWD/var/cache/apt/archives/*.deb; do
     ar x $pkg $(ar t $pkg | grep data)
     proot --link2symlink tar faox data.*
@@ -35,7 +30,6 @@ for pkg in $PWD/var/cache/apt/archives/*.deb; do
 done
 echo "nameserver 8.8.8.8
 nameserver 8.8.4.4" > $PWD/etc/resolv.conf
-export PATH=$PATH:/usr/bin:/bin:/usr/sbin:/sbin
 termux-chroot dpkg --configure --pending --force-configure-any --force-depends --force-architecture
 echo "root:x:0:
 mail:x:8:
