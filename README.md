@@ -20,8 +20,8 @@ chmod +x setup.sh
 
 ## Usage
 
-Open Termux and run:
+Open Termux and run (you might need to exit Termux and open it again):
 
 ```sh
-env -u TMPDIR -u LD_PRELOAD -u PATH proot --link2symlink -S . -w /root /bin/bash
+debian
 ```
