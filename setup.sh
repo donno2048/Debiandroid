@@ -11,19 +11,6 @@ for pkg in $(wget -qO- https://raw.githubusercontent.com/donno2048/Debiandroid/m
 done
 for pkg in $PWD/var/cache/apt/archives/*.deb; do
     dpkg-deb --fsys-tarfile $pkg | proot --link2symlink tar -xf -
-done
-for pkg in base-passwd base-files libc6 perl-base libselinux1 libpcre2-8-0 dpkg; do
-    proot --link2symlink dpkg-deb -R $PWD/var/cache/apt/archives/${pkg}_*.deb tempo
-    rm -f tempo/DEBIAN/post*
-    sed -i -e 's/dpkg-maintscript-helper/#/g' tempo/DEBIAN/pre* || true
-    dpkg-deb -b tempo $pkg.deb
-    if [ "$pkg" != "dpkg" ]; then
-        termux-chroot dpkg --force-all --install $pkg.deb
-        rm $pkg.deb
-    fi
-    rm -rf tempo
-done
-for pkg in $PWD/var/cache/apt/archives/*.deb; do
     ar x $pkg $(ar t $pkg | grep data)
     proot --link2symlink tar faox data.*
     rm -f data.*
@@ -43,5 +30,3 @@ Version: $(dpkg-deb -f $(ls $PWD/var/cache/apt/archives/dpkg*.deb -1) Version)
 Maintainer: unknown
 Status: install ok installed" > $PWD/var/lib/dpkg/status
 echo "deb http://deb.debian.org/debian bullseye main" > $PWD/etc/apt/sources.list
-termux-chroot dpkg --force-all --install dpkg.deb
-rm dpkg.deb
