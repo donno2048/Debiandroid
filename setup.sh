@@ -17,11 +17,6 @@ for pkg in $PWD/var/cache/apt/archives/*.deb; do
 done
 echo "nameserver 8.8.8.8
 nameserver 8.8.4.4" > $PWD/etc/resolv.conf
-termux-chroot dpkg --configure --pending --force-configure-any --force-depends --force-architecture
-echo "root:x:0:
-mail:x:8:
-shadow:x:42:
-utmp:x:43:" > $PWD/etc/group
 echo "root:x:0:0:root:/:/bin/sh
 mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
 _apt:x:100:65534::/nonexistent:/usr/sbin/nologin" > $PWD/etc/passwd
