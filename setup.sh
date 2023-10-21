@@ -14,6 +14,7 @@ for pkg in $(wget -qO- https://raw.githubusercontent.com/donno2048/Debiandroid/m
     proot --link2symlink tar faox data.*
     rm -f data.*
 done
+ln -sf /usr/share/zoneinfo/UTC etc/localtime
 echo -e "nameserver 8.8.8.8\nnameserver 8.8.4.4" > etc/resolv.conf
 echo -e "root:x:0:0:root:/:/bin/sh\n_apt:x:100:65534::/nonexistent:/usr/sbin/nologin" > etc/passwd
 echo -e "Package: dpkg\nVersion: $(dpkg-deb -f $(ls $packages_path/dpkg*.deb) Version)\nMaintainer: unknown\nStatus: install ok installed" > var/lib/dpkg/status
