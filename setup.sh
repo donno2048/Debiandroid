@@ -18,5 +18,5 @@ ln -sf /usr/share/zoneinfo/UTC etc/localtime
 echo -e "nameserver 8.8.8.8\nnameserver 8.8.4.4" > etc/resolv.conf
 echo -e "root:x:0:0:root:/:/bin/sh\n_apt:x:100:65534::/nonexistent:/usr/sbin/nologin" > etc/passwd
 echo -e "Package: dpkg\nVersion: $(dpkg-deb -f $(ls $packages_path/dpkg*.deb) Version)\nMaintainer: unknown\nStatus: install ok installed" > var/lib/dpkg/status
-echo -e "alias debian='env -u TMPDIR -u LD_PRELOAD -u PATH proot --link2symlink -S . -w /root /bin/bash'\nexport GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'\nexport PS1='\[\033[01;32m\]\u\[\033[00m\]@\[\033[01;34m\]\w\[\033[00m\]$ '\nalias ls='ls --color=auto --group-directories-first'\nalias grep='grep --color=auto'\nalias dir='dir --color=auto'\nalias diff='diff --color=auto'" >> ~/.bashrc
+echo -e "alias debian='env -u TMPDIR -u LD_PRELOAD -u PATH proot --link2symlink -S . -w /root /bin/bash'\nexport PATH\nexport GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'\nexport PS1='\[\033[01;32m\]\u\[\033[00m\]@\[\033[01;34m\]\w\[\033[00m\]$ '\nalias ls='ls --color=auto --group-directories-first'\nalias grep='grep --color=auto'\nalias dir='dir --color=auto'\nalias diff='diff --color=auto'" >> ~/.bashrc
 echo "deb http://deb.debian.org/debian bullseye main" > etc/apt/sources.list
