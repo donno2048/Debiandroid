@@ -25,4 +25,4 @@ echo -e "root:x:0:\nstaff:x:1:" >> etc/group
 echo "deb http://deb.debian.org/debian bullseye main" > etc/apt/sources.list
 $apt update
 $apt install mawk -y
-rm $0
+rm "$0"
