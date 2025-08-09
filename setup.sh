@@ -15,7 +15,7 @@ for pkg in $(wget -qO- https://raw.githubusercontent.com/donno2048/Debiandroid/m
     proot --link2symlink tar faox data.*
     rm -f data.*
 done
-mkdir tmp
+mkdir -p tmp
 mkdir -p usr/local
 ln -sf /usr/share/zoneinfo/UTC etc/localtime
 echo -e "nameserver 8.8.8.8\nnameserver 8.8.4.4" > etc/resolv.conf
