@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-apt="env -u TMPDIR -u LD_PRELOAD -u PATH TMPDIR=tmp proot --link2symlink -S . /usr/bin/apt"
+apt="env -u LD_PRELOAD -u PATH TMPDIR=tmp proot --link2symlink -S . /usr/bin/apt"
 case $(uname -m) in
         arm) ARCH=armel;;
         aarch64) ARCH=arm64;;
