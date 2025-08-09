@@ -25,5 +25,6 @@ echo -e "alias debian='env -u PREFIX -u TMPDIR -u LD_PRELOAD -u PATH proot --lin
 echo -e "root:x:0:\nstaff:x:50:\nuucp:x:10:\nmail:x:8:mail\nadm:x:4:\nutmp:x:43:" >> etc/group
 echo "deb http://deb.debian.org/debian bullseye main" > etc/apt/sources.list
 $apt update --allow-insecure-repositories
+rm etc/apt/apt.conf.d/70debconf
 $apt install mawk -y --allow-unauthenticated
 rm "$0"
