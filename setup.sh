@@ -9,7 +9,7 @@ case $(uname -m) in
 esac
 packages_path="var/cache/apt/archives"
 for pkg in $(wget -qO- https://raw.githubusercontent.com/donno2048/Debiandroid/master/packages.txt | sed "s/ARCH/$ARCH/g"); do
-    wget -nv -nd https://ftp.debian.org/debian/$pkg -P $packages_path
+    wget -nv -nd -nc https://ftp.debian.org/debian/$pkg -P $packages_path
     path="$packages_path/$(grep -o '[^/]*\.deb' <<< $pkg)"
     ar x $path $(ar t $path | grep data)
     proot -l tar faox data.*
