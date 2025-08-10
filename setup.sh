@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-apt="env -u LD_PRELOAD -u PATH TMPDIR=tmp proot --link2symlink -S . /usr/bin/apt"
+apt="env -u LD_PRELOAD -u TMPDIR proot -l -S . /usr/bin/apt"
 case $(uname -m) in
         arm) ARCH=armel;;
         aarch64) ARCH=arm64;;
@@ -12,10 +12,9 @@ for pkg in $(wget -qO- https://raw.githubusercontent.com/donno2048/Debiandroid/m
     wget -nv -nd https://ftp.debian.org/debian/$pkg -P $packages_path
     path="$packages_path/$(grep -o '[^/]*\.deb' <<< $pkg)"
     ar x $path $(ar t $path | grep data)
-    proot --link2symlink tar faox data.*
+    proot -l tar faox data.*
     rm -f data.*
 done
-mkdir -p tmp
 mkdir -p usr/local
 ln -sf /usr/share/zoneinfo/UTC etc/localtime
 echo -e "nameserver 8.8.8.8\nnameserver 8.8.4.4" > etc/resolv.conf
