@@ -27,5 +27,5 @@ echo "deb http://deb.debian.org/debian bullseye main" > etc/apt/sources.list
 $apt update --allow-insecure-repositories
 rm etc/apt/apt.conf.d/70debconf
 $apt install mawk -y --allow-unauthenticated
-echo "alias debian='env -u PREFIX -u TMPDIR -u LD_PRELOAD proot -l -0 -r . -w /root /bin/bash --rcfile .bashrc'" >> ~/.bashrc
+echo "alias debian='env -u PREFIX -u TMPDIR -u LD_PRELOAD proot -l -0 -b /dev -b /proc -r . -w /root /bin/bash --rcfile .bashrc'" >> ~/.bashrc
 rm "$0"
