@@ -15,7 +15,7 @@ apt update
 yes | apt install proot openssl wget binutils
 wget https://raw.githubusercontent.com/donno2048/Debiandroid/master/setup.sh
 chmod +x setup.sh
-termux-chroot bash setup.sh
+./setup.sh
 ```
 
 ## Usage
