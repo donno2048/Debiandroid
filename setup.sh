@@ -24,8 +24,9 @@ echo -e "Package: dpkg\nVersion: $(dpkg-deb -f $(ls $packages_path/dpkg*.deb) Ve
 echo -e "export TMPDIR='/tmp'\nexport PATH='/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin'\nexport GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'\nexport PS1='\[\033[01;32m\]\u\[\033[00m\]@\[\033[01;34m\]\w\[\033[00m\]$ '\nalias ls='ls --color=auto --group-directories-first'\nalias grep='grep --color=auto'\nalias dir='dir --color=auto'\nalias diff='diff --color=auto'\nexport LC_ALL=C\nexport DEBIAN_FRONTEND=readline\nalias sudo=" > root/.bashrc
 echo -e "root:x:0:\nstaff:x:50:\nuucp:x:10:\nmail:x:8:mail\nadm:x:4:\nutmp:x:43:" >> etc/group
 echo "deb http://deb.debian.org/debian bullseye main" > etc/apt/sources.list
-$apt update --allow-insecure-repositories
+rm -r var/lib/apt/lists/*
+$apt update
 rm etc/apt/apt.conf.d/70debconf
-$apt install mawk -y --allow-unauthenticated
+$apt install mawk -y
 echo "alias debian='env -u PREFIX -u TMPDIR -u LD_PRELOAD proot -l -0 -b /dev -b /proc -r . -w /root /bin/bash --rcfile .bashrc'" >> ~/.bashrc
 rm "$0"
