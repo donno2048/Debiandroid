@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-apt="env -u LD_PRELOAD -u TMPDIR PATH='/usr/bin:/bin' proot -l -0 -r . /usr/bin/apt"
+apt='env -u LD_PRELOAD -u TMPDIR PATH="$PATH:/usr/bin:/bin" proot -l -0 -r . /usr/bin/apt'
 case $(uname -m) in
         arm) ARCH=armel;;
         aarch64) ARCH=arm64;;
